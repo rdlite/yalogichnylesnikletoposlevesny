@@ -17,7 +17,7 @@ public class PlayerAnimation : MonoBehaviour
 
     public void LookAtInput(Vector2 InputDirection)
     {
-        Vector3 relativePos = new Vector3(InputDirection.x, 0, InputDirection.y);
+        Vector3 relativePos = new Vector3(InputDirection.x, 0f, InputDirection.y);
         Quaternion toRotation = Quaternion.LookRotation(relativePos);
         _transform.rotation = Quaternion.Lerp(_transform.rotation, toRotation, _lookAtInputRotationSpeed * Time.deltaTime);
     }
@@ -27,6 +27,7 @@ public class PlayerAnimation : MonoBehaviour
         if (EnemyGlobalListener.Instance.NearestEnemy != null)
         {
             Vector3 relativePos = EnemyGlobalListener.Instance.NearestEnemy.transform.position - _transform.position;
+            relativePos = new Vector3(relativePos.x, 0f, relativePos.z);
             Quaternion toRotation = Quaternion.LookRotation(relativePos);
             _transform.rotation = Quaternion.Lerp(_transform.rotation, toRotation, _lookAtInputRotationSpeed * Time.deltaTime);
         }

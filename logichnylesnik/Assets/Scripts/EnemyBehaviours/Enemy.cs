@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(EnemyHealth))]
+[RequireComponent(typeof(EnemyAttacker))]
 [RequireComponent(typeof(NavMeshAgent))]
 public abstract class Enemy : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public abstract class Enemy : MonoBehaviour
         EnemyGlobalListener.Instance.AddEnemy(this);
 
         GetComponent<EnemyHealth>().InitHeath(_enemyStats.GetHealth());
+        GetComponent<EnemyAttacker>().InitEnemyAttacker(_enemyStats.GetAttackDamage());
         GetComponent<NavMeshAgent>().speed = _enemyStats.GetMoveSpeed();
 
         InitBehaviours();

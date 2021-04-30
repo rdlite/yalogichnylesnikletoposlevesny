@@ -6,9 +6,10 @@ public class DefaultArrow : Arrow
 {
     private Rigidbody _arrowRigidbody;
 
-    public override void InitArrow(Vector3 target)
+    public override void InitArrow(Vector3 target, float damage)
     {
         _target = target;
+        _attackDamage = damage;
 
         _arrowRigidbody = GetComponent<Rigidbody>();
 
@@ -37,6 +38,10 @@ public class DefaultArrow : Arrow
 
     private void OnTriggerEnter(Collider other)
     {
+        other.GetComponent<IDamagable>()?.ApplyDamage(_attackDamage);
+        other.GetComponent<IPushable>()?.PushAgainst(transform.position, PushPower);
+
+        Destroy(Instantiate(HitEffect, transform.position, Quaternion.identity), .5f);
         Destroy(gameObject);
     }
 }

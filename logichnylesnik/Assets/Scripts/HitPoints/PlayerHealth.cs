@@ -1,7 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-public class EnemyHealth : MonoBehaviour, IDamagable, IPushable
+public class PlayerHealth : MonoBehaviour, IDamagable
 {
     private float _currentHealth = 100f;
     [SerializeField] private GameObject _healthBarCanvasPrefab;
@@ -28,13 +29,7 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IPushable
 
         if (_currentHealth <= 0)
         {
-            Destroy(_healthBar);
-            Destroy(gameObject);
+            print("ÄÀÉ ÄÀÉ ÄÀÉ ÀÌÉ ÄÀÐËÈÍ");
         }
-    }
-
-    public void PushAgainst(Vector3 againstPosition, float pushForce)
-    {
-        GetComponent<Rigidbody>().AddForce((transform.position - againstPosition).normalized * pushForce, ForceMode.Impulse);
     }
 }

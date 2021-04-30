@@ -6,9 +6,15 @@ public abstract class Arrow : MonoBehaviour
     [Range(0f, 10f)]
     public float FlyingSpeed;
 
-    protected Vector3 _target;
+    [Range(20f, 40f)]
+    public float PushPower = 20f;
 
-    public abstract void InitArrow(Vector3 target);
+    [SerializeField] private protected GameObject HitEffect;
+
+    protected Vector3 _target;
+    protected float _attackDamage;
+
+    public abstract void InitArrow(Vector3 target, float damage);
  
     protected abstract void ArrowFlying();
 }

@@ -35,6 +35,7 @@ Transform:
   m_LocalScale: {x: 0.37190032, y: 0.37190032, z: 0.37190032}
   m_Children:
   - {fileID: 915826085180612557}
+  - {fileID: 8757968428008678675}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -165,6 +166,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 142ba0a953f2bf24c8fbe9f509200988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _healthBarCanvasPrefab: {fileID: 5047690393200293328, guid: b898b6ba4c34068409235d0a81c44721, type: 3}
+  _healthBarCanvasPoint: {fileID: 8757968428008678675}
 --- !u!1 &2392006257489443470
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,3 +250,33 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &7923854074086606379
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8757968428008678675}
+  m_Layer: 10
+  m_Name: HealthBarPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8757968428008678675
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7923854074086606379}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.64, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 413224123378168910}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

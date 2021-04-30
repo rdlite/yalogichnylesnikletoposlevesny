@@ -1,9 +1,10 @@
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerMovement))]
 [RequireComponent(typeof(PlayerInput))]
-[RequireComponent(typeof(PlayerAttacker))]
+[RequireComponent(typeof(PlayerMovement))]
 [RequireComponent(typeof(PlayerAnimation))]
+[RequireComponent(typeof(PlayerAttacker))]
+[RequireComponent(typeof(PlayerHealth))]
 public class PlayerComponentsManager : MonoBehaviour
 {
     [SerializeField] private PlayerStats _playerStats;
@@ -12,6 +13,7 @@ public class PlayerComponentsManager : MonoBehaviour
     private PlayerMovement _playerMovement;
     private PlayerAttacker _playerAttacker;
     private PlayerAnimation _playerAnimation;
+    private PlayerHealth _playerHealth;
 
     private void Start()
     {
@@ -21,9 +23,13 @@ public class PlayerComponentsManager : MonoBehaviour
         _playerMovement = GetComponent<PlayerMovement>();
         
         _playerAttacker = GetComponent<PlayerAttacker>();
+        _playerAttacker.SetAttackDamage(_playerStats.GetAttackDamage());
         _playerAttacker.SetAttackSpeed(_playerStats.GetAttackSpeed());
 
         _playerAnimation = GetComponent<PlayerAnimation>();
+
+        _playerHealth = GetComponent<PlayerHealth>();
+        _playerHealth.InitHeath(_playerStats.GetMaxHealth());
     }
 
     private void Update()

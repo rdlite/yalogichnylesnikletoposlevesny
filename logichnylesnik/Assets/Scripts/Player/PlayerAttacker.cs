@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerAttacker : MonoBehaviour
 {
     private float _attackSpeed;
+    private float _attackDamage;
     private float _attackCounter;
 
     [SerializeField] private GameObject _arrowPrefab;
@@ -13,6 +14,11 @@ public class PlayerAttacker : MonoBehaviour
         _attackSpeed = value;
     }
 
+    public void SetAttackDamage(float value)
+    {
+        _attackDamage = value;
+    }
+
     public void AttackingEvent()
     {
         _attackCounter += Time.deltaTime;
@@ -21,7 +27,10 @@ public class PlayerAttacker : MonoBehaviour
         {
             _attackCounter = 0;
 
-            Shoot();
+            if (EnemyGlobalListener.Instance.NearestEnemy != null)
+            {
+                Shoot();
+            }
         }
     }
 
@@ -31,6 +40,6 @@ public class PlayerAttacker : MonoBehaviour
 
         newArrow.transform.position = _shootPoint.transform.position;
 
-        newArrow.GetComponent<Arrow>().InitArrow(EnemyGlobalListener.Instance.NearestEnemy.transform.position);
+        newArrow.GetComponent<Arrow>().InitArrow(EnemyGlobalListener.Instance.NearestEnemy.transform.position, _attackDamage);
     }
 }
