@@ -32,4 +32,14 @@ public class PlayerAnimation : MonoBehaviour
             _transform.rotation = Quaternion.Lerp(_transform.rotation, toRotation, _lookAtInputRotationSpeed * Time.deltaTime);
         }
     }
+
+    public void SetWalkingAnimation(bool isMoving)
+    {
+        _playerAnimator.SetBool("IsMoving", isMoving);
+    }
+
+    public void SetAttack()
+    {
+        _playerAnimator.SetTrigger("Attack");
+    }
 }

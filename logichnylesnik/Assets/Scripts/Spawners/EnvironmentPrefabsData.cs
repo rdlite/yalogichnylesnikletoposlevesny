@@ -8,6 +8,7 @@ public class EnvironmentPrefabsData : MonoBehaviour
     [SerializeField] private GameObject DarkGrassPrefab;
     [SerializeField] private GameObject StoneObstalcePrefab;
     [SerializeField] private GameObject WaterObstalcePrefab;
+    [SerializeField] private GameObject DoorObstaclePrefab;
 
     public GameObject GetBrightGrassPrefab()
     {
@@ -27,6 +28,11 @@ public class EnvironmentPrefabsData : MonoBehaviour
     public GameObject GetWaterObstalcePrefab()
     {
         return WaterObstalcePrefab;
+    }
+
+    public GameObject GetDoorObstaclePrefab()
+    {
+        return DoorObstaclePrefab;
     }
 
     public float GetCubesScale()

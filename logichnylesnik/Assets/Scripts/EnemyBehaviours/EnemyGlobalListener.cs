@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,8 +18,6 @@ public class EnemyGlobalListener : MonoBehaviour
     public GameObject NearestEnemy { get; private set; }
 
     public void AddEnemy(Enemy enemyToAdd) => _enemiesOnScene.Add(enemyToAdd);
-
-    public void RemoveEnemy(Enemy enemyToAdd) => _enemiesOnScene.Remove(enemyToAdd);
 
     public void InitPlayer(Transform playerObject) => _player = playerObject;
 
@@ -55,6 +54,16 @@ public class EnemyGlobalListener : MonoBehaviour
             }
 
             NearestEnemy.GetComponent<Enemy>().SetNearestIndicatorActive(true);
+        }
+    }
+
+    public void OnEnemyDead(Enemy enemy)
+    {
+        _enemiesOnScene.Remove(enemy);
+
+        if (_enemiesOnScene.Count == 0)
+        {
+            EndLevelEvents.Instance.AllEnemyKilled();
         }
     }
 }

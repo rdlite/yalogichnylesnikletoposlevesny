@@ -11,4 +11,7 @@ public class EnemyStats : ScriptableObject
 
     [SerializeField] private float AttackDamage;
     public float GetAttackDamage() => AttackDamage;
+
+    [SerializeField] private int OnDeathCoinsAmount;
+    public int GetOnDeathCoinsAmount() => OnDeathCoinsAmount;
 }

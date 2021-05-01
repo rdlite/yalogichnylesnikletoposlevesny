@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 [RequireComponent(typeof(Rigidbody))]
 public class EnemyHealth : MonoBehaviour, IDamagable, IPushable
@@ -8,6 +9,9 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IPushable
     [SerializeField] private Transform _healthBarCanvasPoint;
 
     private GameObject _healthBar;
+
+    public event Action OnAttacked;
+    public event Action OnDestroy;
 
     public void InitHeath(float value)
     {
@@ -29,8 +33,12 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IPushable
         if (_currentHealth <= 0)
         {
             Destroy(_healthBar);
-            Destroy(gameObject);
+
+            OnDestroy?.Invoke();
+            Destroy(gameObject, .2f);
         }
+
+        OnAttacked?.Invoke();
     }
 
     public void PushAgainst(Vector3 againstPosition, float pushForce)

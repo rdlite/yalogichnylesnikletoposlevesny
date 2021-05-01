@@ -30,6 +30,8 @@ public class PlayerComponentsManager : MonoBehaviour
 
         _playerHealth = GetComponent<PlayerHealth>();
         _playerHealth.InitHeath(_playerStats.GetMaxHealth());
+
+        _playerAttacker.OnShoot += _playerAnimation.SetAttack;
     }
 
     private void Update()
@@ -47,6 +49,8 @@ public class PlayerComponentsManager : MonoBehaviour
             _playerAnimation.LookAtNearestEnemy();
             _playerAttacker.AttackingEvent();
         }
+     
+        _playerAnimation.SetWalkingAnimation(_playerInput.IsMoving());
     }
 
     private void FixedUpdate()

@@ -15,8 +15,10 @@ public class FieldSpawner : MonoBehaviour
     [SerializeField] private int _stoneObstaclesAmount = 10, _waterObstaclesAmount;
     [SerializeField] private int EnemiesToSpawnAmount = 5;
 
-    [SerializeField] private Transform _floorParentObject, _obstaclesParentObject;
+    [SerializeField] private Transform _floorParentObject, _obstaclesParentObject, _doorParent;
     [SerializeField] private Transform _startFloorPoint;
+
+    [SerializeField] private GameObject _endLevelTrigger;
 
     [SerializeField] private int _playerStartCubeOffsetByZ = 4;
 
@@ -40,6 +42,8 @@ public class FieldSpawner : MonoBehaviour
 
         PlacePlayer();
 
+        SpawnDoor();
+
         SpawnOuterObstacles();
         SpawnInnerObstacles();
 
@@ -51,6 +55,39 @@ public class FieldSpawner : MonoBehaviour
         SpawnEnemies();
 
         _fieldMeshSurface.BuildNavMesh();
+
+        EndLevelEvents.Instance.OnAllEnemiesKilled += SetActiveFalseDoorParent;
+        EndLevelEvents.Instance.OnAllEnemiesKilled += SetActiveEndLevelTrigger;
+    }
+
+    private void SpawnDoor()
+    {
+        for (int x = _fieldLengthX / 2 - 1; x < _fieldLengthX / 2 + 2; x++)
+        {
+            // сами двери
+            GameObject newEnvironmentCube = Instantiate(_cubesData.GetDoorObstaclePrefab());
+
+            SetSpawnedCubePosition(
+                newEnvironmentCube,
+                new Vector3(_startFloorPoint.position.x + x * _cubesData.GetCubesScale(), GetGroundLevelYPositionByStartPoint(1), _startFloorPoint.position.z),
+                Quaternion.identity,
+                _doorParent);
+
+
+            // пол под ним
+            GameObject floorCubeUnderDoor = Instantiate(GetFloorCubeByMode(x));
+
+            SetSpawnedCubePosition(
+                floorCubeUnderDoor,
+                new Vector3(_startFloorPoint.position.x + x * _cubesData.GetCubesScale(), GetGroundLevelYPositionByStartPoint(0), _startFloorPoint.position.z),
+                Quaternion.identity,
+                _floorParentObject);
+
+            SetCellUsed(x, 0);
+        }
+
+        // установка триггера на двери
+        _endLevelTrigger.transform.position = new Vector3(_startFloorPoint.position.x + _fieldLengthX / 2 * _cubesData.GetCubesScale(), GetGroundLevelYPositionByStartPoint(1), _startFloorPoint.position.z + _cubesData.GetCubesScale() / 2);
     }
 
     private void SpawnEnemies()
@@ -78,7 +115,7 @@ public class FieldSpawner : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(1);
         }
     }
 
@@ -93,7 +130,7 @@ public class FieldSpawner : MonoBehaviour
                     continue;
                 }
 
-                GameObject grassCubeToInstantiate = (x + y) % 2 == 0 ? GetComponent<EnvironmentPrefabsData>().GetBrightGrassPrefab() : GetComponent<EnvironmentPrefabsData>().GetDarkGrassPrefab();
+                GameObject grassCubeToInstantiate = GetFloorCubeByMode(x + y);
 
                 GameObject newEnvironmentCube = Instantiate(grassCubeToInstantiate);
 
@@ -106,20 +143,46 @@ public class FieldSpawner : MonoBehaviour
         }
     }
 
+    private GameObject GetFloorCubeByMode(int id)
+    {
+        return id % 2 == 0 ? GetComponent<EnvironmentPrefabsData>().GetBrightGrassPrefab() : GetComponent<EnvironmentPrefabsData>().GetDarkGrassPrefab();
+    }
+
     private void SpawnOuterObstacles()
     {
         GameObject stonePrefab = GetComponent<EnvironmentPrefabsData>().GetStoneObstalcePrefab();
 
+        // спавн верхней стены с пробелом под двери
+        {
+            for (int x = 0; x < _fieldLengthX / 2 - 1; x++)
+            {
+                GameObject newEnvironmentCubeUp = Instantiate(stonePrefab);
+
+                SetSpawnedCubePosition(
+                    newEnvironmentCubeUp,
+                    new Vector3(_startFloorPoint.position.x + x * _cubesData.GetCubesScale(), GetGroundLevelYPositionByStartPoint(1), _startFloorPoint.position.z),
+                    Quaternion.identity,
+                    _obstaclesParentObject);
+
+                SetCellUsed(x, 0);
+            }
+
+            for (int x = _fieldLengthX / 2 + 2; x < _fieldLengthX; x++)
+            {
+                GameObject newEnvironmentCubeUp = Instantiate(stonePrefab);
+
+                SetSpawnedCubePosition(
+                    newEnvironmentCubeUp,
+                    new Vector3(_startFloorPoint.position.x + x * _cubesData.GetCubesScale(), GetGroundLevelYPositionByStartPoint(1), _startFloorPoint.position.z),
+                    Quaternion.identity,
+                    _obstaclesParentObject);
+
+                SetCellUsed(x, 0);
+            }
+        }
+
         for (int x = 0; x < _fieldLengthX; x++)
         {
-            GameObject newEnvironmentCubeUp = Instantiate(stonePrefab);
-
-            SetSpawnedCubePosition(
-                newEnvironmentCubeUp, 
-                new Vector3(_startFloorPoint.position.x + x * _cubesData.GetCubesScale(), GetGroundLevelYPositionByStartPoint(1), _startFloorPoint.position.z), 
-                Quaternion.identity,
-                _obstaclesParentObject);
-
             GameObject newEnvironmentCubeDown = Instantiate(stonePrefab);
 
             SetSpawnedCubePosition(
@@ -128,7 +191,6 @@ public class FieldSpawner : MonoBehaviour
                 Quaternion.identity,
                 _obstaclesParentObject);
 
-            SetCellUsed(x, 0);
             SetCellUsed(x, _fieldLengthY);
         }
 
@@ -219,8 +281,8 @@ public class FieldSpawner : MonoBehaviour
     {
         do
         {
-            newCellXIndex = UnityEngine.Random.Range(0, _fieldLengthX);
-            newCellYIndex = UnityEngine.Random.Range(0, _fieldLengthY);
+            newCellXIndex = UnityEngine.Random.Range(0, fieldbyX);
+            newCellYIndex = UnityEngine.Random.Range(0, fieldbyY);
         } while (_usedCellsIDs.Contains(new Vector2Int(newCellXIndex, newCellYIndex)) || new Vector2Int(newCellXIndex, newCellYIndex) == _playerStartPoint);
     }
 
@@ -253,5 +315,15 @@ public class FieldSpawner : MonoBehaviour
     private void SetCellUsed(int x, int y)
     {
         _usedCellsIDs.Add(new Vector2Int(x, y));
+    }
+
+    public void SetActiveFalseDoorParent()
+    {
+        _doorParent.gameObject.SetActive(false);
+    }
+
+    public void SetActiveEndLevelTrigger()
+    {
+        _endLevelTrigger.SetActive(true);
     }
 }

@@ -15,3 +15,4 @@ MonoBehaviour:
   MoveSpeed: 1
   Health: 100
   AttackDamage: 100
+  OnDeathCoinsAmount: 10

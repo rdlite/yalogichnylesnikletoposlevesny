@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerAttacker : MonoBehaviour
@@ -8,6 +9,13 @@ public class PlayerAttacker : MonoBehaviour
 
     [SerializeField] private GameObject _arrowPrefab;
     [SerializeField] private GameObject _shootPoint;
+
+    public event Action OnShoot;
+
+    private void Start()
+    {
+        OnShoot += Shoot;
+    }
 
     public void SetAttackSpeed(float value)
     {
@@ -29,7 +37,7 @@ public class PlayerAttacker : MonoBehaviour
 
             if (EnemyGlobalListener.Instance.NearestEnemy != null)
             {
-                Shoot();
+                OnShoot.Invoke();
             }
         }
     }

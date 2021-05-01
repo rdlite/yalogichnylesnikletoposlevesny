@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(EnemyAnimation))]
+[RequireComponent(typeof(CoinsSpawner))]
 [RequireComponent(typeof(EnemyHealth))]
 [RequireComponent(typeof(EnemyOnCollisionAttacker))]
 [RequireComponent(typeof(NavMeshAgent))]
@@ -34,6 +37,10 @@ public abstract class Enemy : MonoBehaviour
 
         InitBehaviours();
 
+        GetComponent<EnemyHealth>().OnAttacked += GetComponent<EnemyAnimation>().SetAttacked;
+        GetComponent<EnemyHealth>().OnDestroy += GetComponent<EnemyAnimation>().SetDeath;
+        GetComponent<EnemyHealth>().OnDestroy += OnEnemyDead;
+
         StartCoroutine(CoroutineUpdate());
     }
 
@@ -58,8 +65,10 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
+    private void OnEnemyDead()
     {
-        EnemyGlobalListener.Instance.RemoveEnemy(this);
+        GetComponent<CoinsSpawner>().SpawnCoins(transform.position, _enemyStats.GetOnDeathCoinsAmount());
+
+        EnemyGlobalListener.Instance.OnEnemyDead(this);
     }
 }
