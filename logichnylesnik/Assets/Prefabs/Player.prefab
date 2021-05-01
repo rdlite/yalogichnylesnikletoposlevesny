@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1134021522780533218}
   - component: {fileID: 1134021522780533219}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerInputDirectionIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 1134021522799652762}
   - component: {fileID: 3669756064416598177}
   - component: {fileID: 1410332258736955638}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,7 +166,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1134021522799652771}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 2
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -265,7 +265,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1134021523024273084}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -299,7 +299,7 @@ GameObject:
   - component: {fileID: 1134021523738890118}
   - component: {fileID: 1134021523738890112}
   - component: {fileID: 1134021523738890119}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: DirectionIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -380,7 +380,7 @@ GameObject:
   - component: {fileID: 1134021523898759495}
   - component: {fileID: 1134021523898759489}
   - component: {fileID: 1134021523898759488}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: OuterBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -1,16 +1,19 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(EnemyHealth))]
-[RequireComponent(typeof(EnemyAttacker))]
+[RequireComponent(typeof(EnemyOnCollisionAttacker))]
 [RequireComponent(typeof(NavMeshAgent))]
 public abstract class Enemy : MonoBehaviour
 {
-    [SerializeField] private EnemyStats _enemyStats;
+    [SerializeField] protected EnemyStats _enemyStats;
+    protected Transform target;
 
     [SerializeField] private GameObject _nearestIndicator;
 
     protected IEnemyMovable _enemyMovableBehaviour;
+    protected IEnemyAttack _enemyAttackBehaviour;
 
     protected abstract void InitBehaviours();
 
@@ -19,25 +22,40 @@ public abstract class Enemy : MonoBehaviour
         _nearestIndicator.SetActive(value);
     }
 
-    private void Move()
+    public void InitEnemy(Transform target)
     {
-        _enemyMovableBehaviour.MoveEnemy();
-    }
+        this.target = target;
 
-    private void Start()
-    {
         EnemyGlobalListener.Instance.AddEnemy(this);
 
         GetComponent<EnemyHealth>().InitHeath(_enemyStats.GetHealth());
-        GetComponent<EnemyAttacker>().InitEnemyAttacker(_enemyStats.GetAttackDamage());
+        GetComponent<EnemyOnCollisionAttacker>().InitEnemyAttacker(_enemyStats.GetAttackDamage());
         GetComponent<NavMeshAgent>().speed = _enemyStats.GetMoveSpeed();
 
         InitBehaviours();
+
+        StartCoroutine(CoroutineUpdate());
     }
 
-    private void Update()
+    private void Move()
     {
-        Move();
+        _enemyMovableBehaviour?.MoveEnemy();
+    }
+
+    private void Attack()
+    {
+        _enemyAttackBehaviour?.Attack();
+    }
+
+    private IEnumerator CoroutineUpdate()
+    {
+        while (gameObject.activeSelf)
+        {
+            Move();
+            Attack();
+
+            yield return null;
+        }
     }
 
     private void OnDestroy()

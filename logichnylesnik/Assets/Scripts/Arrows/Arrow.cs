@@ -3,10 +3,10 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public abstract class Arrow : MonoBehaviour
 {
-    [Range(0f, 10f)]
+    [Range(0f, 20f)]
     public float FlyingSpeed;
 
-    [Range(20f, 40f)]
+    [Range(0f, 40f)]
     public float PushPower = 20f;
 
     [SerializeField] private protected GameObject HitEffect;

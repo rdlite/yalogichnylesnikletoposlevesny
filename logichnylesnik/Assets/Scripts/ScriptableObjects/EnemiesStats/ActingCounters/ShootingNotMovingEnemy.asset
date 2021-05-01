@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74ab28ceee023134f8e6785ea245e0f3, type: 3}
-  m_Name: PlayerStats
+  m_Script: {fileID: 11500000, guid: 538965ccd2be7be4fb30c143d1261954, type: 3}
+  m_Name: ShootingNotMovingEnemy
   m_EditorClassIdentifier: 
-  MoveSpeed: 3
-  AttackSpeed: 0.6
-  AttackDamage: 40
-  MaxHealth: 800
+  MaxTimeToAct: 1.5
+  ActingTime: 0
+  ModifyingValueMultiplier: 0

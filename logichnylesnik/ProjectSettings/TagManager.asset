@@ -16,8 +16,8 @@ TagManager:
   - Player
   - Arrow
   - Enemy
-  - 
-  - 
+  - FlyingEnemy
+  - EnemyArrow
   - 
   - 
   - 

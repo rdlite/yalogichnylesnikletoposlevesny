@@ -75,7 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01fd26018adb28647bc8bc27cd3cea4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FlyingSpeed: 10
+  FlyingSpeed: 20
   PushPower: 20
   HitEffect: {fileID: 364747520369726101, guid: d1c1b9ed50e07814897b7453b2e1ad4a, type: 3}
 --- !u!1 &2879246003055699676

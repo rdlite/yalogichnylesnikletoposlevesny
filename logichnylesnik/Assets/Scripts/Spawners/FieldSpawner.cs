@@ -13,6 +13,7 @@ public class FieldSpawner : MonoBehaviour
     [SerializeField] private int _fieldLengthX = 4, _fieldLengthY = 20;
 
     [SerializeField] private int _stoneObstaclesAmount = 10, _waterObstaclesAmount;
+    [SerializeField] private int EnemiesToSpawnAmount = 5;
 
     [SerializeField] private Transform _floorParentObject, _obstaclesParentObject;
     [SerializeField] private Transform _startFloorPoint;
@@ -21,6 +22,9 @@ public class FieldSpawner : MonoBehaviour
 
     [SerializeField] private GameObject Player;
     [SerializeField] private GameObject Camera;
+
+    [SerializeField] private Transform _enemiesParent;
+    [SerializeField] private GameObject[] EnemiesToSpawn;
 
     private List<Vector2Int> _usedCellsIDs = new List<Vector2Int>();
     private Vector2Int _playerStartPoint;
@@ -44,7 +48,30 @@ public class FieldSpawner : MonoBehaviour
         SetCameraStartPosition();
         SetCameraScale();
 
+        SpawnEnemies();
+
         _fieldMeshSurface.BuildNavMesh();
+    }
+
+    private void SpawnEnemies()
+    {
+        for (int i = 0; i < EnemiesToSpawnAmount; i++)
+        {
+            int x = 0, y = 0;
+
+            // установка рандомной позиции на 2/3 поля по высоте
+            SetUnusedCells(ref x, ref y, _fieldLengthX, (int)(_fieldLengthY * (2f / 3f)));
+
+            SetCellUsed(x, y);
+
+            GameObject newEnemy = Instantiate(EnemiesToSpawn[UnityEngine.Random.Range(0, EnemiesToSpawn.Length)]);
+            SetSpawnedCubePosition(newEnemy, new Vector3(
+                _startFloorPoint.position.x + x * _cubesData.GetCubesScale(),
+                GetGroundLevelYPositionByStartPoint(1),
+                _startFloorPoint.position.z + -y * _cubesData.GetCubesScale()), Quaternion.identity, _enemiesParent);
+
+            newEnemy.GetComponent<Enemy>().InitEnemy(Player.transform);
+        }
     }
 
     private void Update()
@@ -101,8 +128,8 @@ public class FieldSpawner : MonoBehaviour
                 Quaternion.identity,
                 _obstaclesParentObject);
 
-            _usedCellsIDs.Add(new Vector2Int(x, 0));
-            _usedCellsIDs.Add(new Vector2Int(x, _fieldLengthY));
+            SetCellUsed(x, 0);
+            SetCellUsed(x, _fieldLengthY);
         }
 
         for (int y = 0; y < _fieldLengthY + 1; y++)
@@ -123,8 +150,7 @@ public class FieldSpawner : MonoBehaviour
                 Quaternion.identity,
                 _obstaclesParentObject);
 
-            //_usedCellsIDs.Add(new Vector2Int(0, y));
-            _usedCellsIDs.Add(new Vector2Int(_fieldLengthX, y));
+            SetCellUsed(_fieldLengthX, y);
         }
     }
 
@@ -157,7 +183,7 @@ public class FieldSpawner : MonoBehaviour
                 Quaternion.identity,
                 _obstaclesParentObject);
 
-            _usedCellsIDs.Add(new Vector2Int(newCellXIndex, newCellYIndex));
+            SetCellUsed(newCellXIndex, newCellYIndex);
         }
 
         // спавн воды
@@ -176,11 +202,20 @@ public class FieldSpawner : MonoBehaviour
                 Quaternion.identity,
                 _obstaclesParentObject);
 
-            _usedCellsIDs.Add(new Vector2Int(newCellXIndex, newCellYIndex));
+            SetCellUsed(newCellXIndex, newCellYIndex);
         }
     }
 
     private void SetUnusedCells(ref int newCellXIndex, ref int newCellYIndex)
+    {
+        do
+        {
+            newCellXIndex = UnityEngine.Random.Range(0, _fieldLengthX);
+            newCellYIndex = UnityEngine.Random.Range(0, _fieldLengthY);
+        } while (_usedCellsIDs.Contains(new Vector2Int(newCellXIndex, newCellYIndex)) || new Vector2Int(newCellXIndex, newCellYIndex) == _playerStartPoint);
+    }
+
+    private void SetUnusedCells(ref int newCellXIndex, ref int newCellYIndex, int fieldbyX, int fieldbyY)
     {
         do
         {
@@ -213,5 +248,10 @@ public class FieldSpawner : MonoBehaviour
     private float GetGroundLevelYPositionByStartPoint(int groundLevel)
     {
         return _startFloorPoint.position.y + groundLevel * _cubesData.GetCubesScale();
+    }
+
+    private void SetCellUsed(int x, int y)
+    {
+        _usedCellsIDs.Add(new Vector2Int(x, y));
     }
 }

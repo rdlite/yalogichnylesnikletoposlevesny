@@ -35,6 +35,6 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IPushable
 
     public void PushAgainst(Vector3 againstPosition, float pushForce)
     {
-        GetComponent<Rigidbody>().AddForce((transform.position - againstPosition).normalized * pushForce, ForceMode.Impulse);
+        GetComponent<Rigidbody>().AddForce((againstPosition - transform.position).normalized * pushForce, ForceMode.Impulse);
     }
 }

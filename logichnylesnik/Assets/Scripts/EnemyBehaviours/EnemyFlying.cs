@@ -1,10 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyWalkable : Enemy
+public class EnemyFlying : Enemy
 {
+    [SerializeField] private EnemyActingCounters EnemyActingCountersData;
+
     protected override void InitBehaviours()
     {
         if (target == null)
@@ -12,6 +12,6 @@ public class EnemyWalkable : Enemy
             target = FindObjectOfType<PlayerComponentsManager>().transform;
         }
 
-        _enemyMovableBehaviour = new MovementToPlayerBehaviour(target, GetComponent<NavMeshAgent>());
+        _enemyMovableBehaviour = new FlyToPlayerBehaviour(target, transform, _enemyStats, EnemyActingCountersData);
     }
 }

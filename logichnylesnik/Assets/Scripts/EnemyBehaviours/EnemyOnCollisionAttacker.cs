@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAttacker : MonoBehaviour
+public class EnemyOnCollisionAttacker : MonoBehaviour
 {
     private float _attackDamage;
 

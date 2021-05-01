@@ -16,8 +16,9 @@ GameObject:
   - component: {fileID: 413224123378168899}
   - component: {fileID: 413224123378168900}
   - component: {fileID: 4643328864143261560}
+  - component: {fileID: 8686720053145091753}
   m_Layer: 10
-  m_Name: Enemy_Walkable
+  m_Name: EnemyWalkable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -168,6 +169,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _healthBarCanvasPrefab: {fileID: 5047690393200293328, guid: b898b6ba4c34068409235d0a81c44721, type: 3}
   _healthBarCanvasPoint: {fileID: 8757968428008678675}
+--- !u!114 &8686720053145091753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 413224123378168909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c19f3816201a704d8a13898394ac210, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2392006257489443470
 GameObject:
   m_ObjectHideFlags: 0

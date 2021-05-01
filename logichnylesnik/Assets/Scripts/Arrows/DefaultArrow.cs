@@ -6,9 +6,12 @@ public class DefaultArrow : Arrow
 {
     private Rigidbody _arrowRigidbody;
 
+    private Vector3 _direction;
+
     public override void InitArrow(Vector3 target, float damage)
     {
         _target = target;
+        _direction = (_target - transform.position).normalized;
         _attackDamage = damage;
 
         _arrowRigidbody = GetComponent<Rigidbody>();
@@ -32,14 +35,14 @@ public class DefaultArrow : Arrow
         {
             transform.LookAt(_target);
 
-            _arrowRigidbody.velocity = (_target - transform.position).normalized * FlyingSpeed;
+            _arrowRigidbody.velocity = _direction * FlyingSpeed;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         other.GetComponent<IDamagable>()?.ApplyDamage(_attackDamage);
-        other.GetComponent<IPushable>()?.PushAgainst(transform.position, PushPower);
+        other.GetComponent<IPushable>()?.PushAgainst(transform.forward, PushPower);
 
         Destroy(Instantiate(HitEffect, transform.position, Quaternion.identity), .5f);
         Destroy(gameObject);

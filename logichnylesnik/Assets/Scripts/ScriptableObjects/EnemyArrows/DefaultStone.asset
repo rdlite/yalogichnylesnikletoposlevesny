@@ -9,10 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74ab28ceee023134f8e6785ea245e0f3, type: 3}
-  m_Name: PlayerStats
+  m_Script: {fileID: 11500000, guid: 0dddea275e87b6849b48697dee54a698, type: 3}
+  m_Name: DefaultStone
   m_EditorClassIdentifier: 
-  MoveSpeed: 3
-  AttackSpeed: 0.6
-  AttackDamage: 40
-  MaxHealth: 800
+  ArrowPrefab: {fileID: 6614419692067515706, guid: 50f42eeb391f5204ab939ddfe4f9bf6b, type: 3}
