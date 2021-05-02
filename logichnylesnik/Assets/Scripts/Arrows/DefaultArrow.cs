@@ -8,9 +8,19 @@ public class DefaultArrow : Arrow
 
     private Vector3 _direction;
 
-    public override void InitArrow(Vector3 target, float damage)
+    public override void InitArrow(Vector3 direction, float damage)
     {
-        _target = target;
+        _direction = direction;
+        _attackDamage = damage;
+
+        _arrowRigidbody = GetComponent<Rigidbody>();
+
+        StartCoroutine(FixedCoroutineUpdate());
+    }
+
+    public override void InitArrow(Transform target, float damage)
+    {
+        _target = target.position;
         _direction = (_target - transform.position).normalized;
         _attackDamage = damage;
 
@@ -33,7 +43,7 @@ public class DefaultArrow : Arrow
     {
         if (_target != null)
         {
-            transform.LookAt(_target);
+            transform.LookAt(transform.position + _direction);
 
             _arrowRigidbody.velocity = _direction * FlyingSpeed;
         }

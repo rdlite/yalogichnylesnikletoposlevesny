@@ -18,4 +18,12 @@ public class EnemyOnCollisionAttacker : MonoBehaviour
             collision.gameObject.GetComponent<IDamagable>()?.ApplyDamage(_attackDamage);
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.GetComponent<PlayerHealth>() != null)
+        {
+            other.GetComponent<IDamagable>()?.ApplyDamage(_attackDamage);
+        }
+    }
 }

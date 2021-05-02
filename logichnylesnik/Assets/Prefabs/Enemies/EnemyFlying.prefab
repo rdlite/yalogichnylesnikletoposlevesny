@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 1640408846328267322}
   - component: {fileID: 1640408846328267321}
   - component: {fileID: 1276083916554128147}
+  - component: {fileID: 6217553989970870300}
   m_Layer: 11
   m_Name: EnemyFlying
   m_TagString: Untagged
@@ -118,8 +119,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 5
+  m_Radius: 0.3
+  m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &1640408846328267320
@@ -129,7 +130,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1640408846328267326}
-  m_Enabled: 0
+  m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 1.5
@@ -229,6 +230,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CoinPrefab: {fileID: 5042927543669707367, guid: 828956e34a59fca4fab22b6194a7172d, type: 3}
+--- !u!65 &6217553989970870300
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1640408846328267326}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 7.7867656, z: 1}
+  m_Center: {x: 0, y: -0.5522618, z: 0}
 --- !u!1 &1640408847838129256
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InGameUIButtons : MonoBehaviour
+public class InGameUI : MonoBehaviour
 {
     [SerializeField] private GameObject _inGameHUD;
     [SerializeField] private GameObject _pauseMenu;
 
     [SerializeField] private Image _foreground;
+
+    [SerializeField] private GameObject _gameCounterPanel, _gameCounterText;
+    [SerializeField] private float _startCounterTextScale, _endCounterTextScale;
 
     public void PauseGame()
     {
@@ -70,8 +73,6 @@ public class InGameUIButtons : MonoBehaviour
         {
             funcToLoadAfter.Invoke();
         }
-
-        _inGameHUD.SetActive(true);
     }
 
     private IEnumerator ShowBlackScreen(Action funcToLoadAfter)
@@ -99,5 +100,40 @@ public class InGameUIButtons : MonoBehaviour
         Time.timeScale = 1;
 
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+    }
+
+    public void SetActiveInGameHUD(bool value)
+    {
+        _inGameHUD.SetActive(value);
+    }
+
+    public void StartCounter(int startCounterValue)
+    {
+        StartCoroutine(StartGameCounter(startCounterValue));
+    }
+
+    private IEnumerator StartGameCounter(int startCounterValue)
+    {
+        _gameCounterPanel.SetActive(true);
+        _gameCounterText.SetActive(true);
+
+        for (int i = startCounterValue; i > 0; i--)
+        {
+            float timer = 1f;
+
+            _gameCounterText.GetComponent<Text>().text = i.ToString();
+
+            while (timer > 0f)
+            {
+                timer -= Time.deltaTime;
+
+                _gameCounterText.transform.localScale = Vector3.one * Mathf.Lerp(_startCounterTextScale, _endCounterTextScale, 1f - timer);
+
+                yield return null;
+            }
+        }
+
+        _gameCounterPanel.SetActive(false);
+        _gameCounterText.SetActive(false);
     }
 }

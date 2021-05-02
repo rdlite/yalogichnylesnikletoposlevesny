@@ -9,6 +9,8 @@ public class MenuUI : MonoBehaviour
 
     [SerializeField] private Image _foreground;
 
+    [SerializeField] private MainMenu _menu;
+
     private void Start()
     {
         StartCoroutine(HideBlackScreen(null));
@@ -70,6 +72,8 @@ public class MenuUI : MonoBehaviour
 
     private void LoadLevel()
     {
+        _menu.InitStartValues();
+
         UnityEngine.SceneManagement.SceneManager.LoadScene(1);
     }
 }

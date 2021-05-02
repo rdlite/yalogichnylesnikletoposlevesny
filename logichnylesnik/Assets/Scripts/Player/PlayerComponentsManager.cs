@@ -8,6 +8,7 @@ using UnityEngine;
 public class PlayerComponentsManager : MonoBehaviour
 {
     [SerializeField] private PlayerStats _playerStats;
+    [SerializeField] private PlayerHPDataBetweenScenes _playerHPDataContainer;
 
     private PlayerInput _playerInput;
     private PlayerMovement _playerMovement;
@@ -29,9 +30,10 @@ public class PlayerComponentsManager : MonoBehaviour
         _playerAnimation = GetComponent<PlayerAnimation>();
 
         _playerHealth = GetComponent<PlayerHealth>();
-        _playerHealth.InitHeath(_playerStats.GetMaxHealth());
+        _playerHealth.InitHeath(_playerHPDataContainer.PlayerHP, _playerHPDataContainer.PlayerMaxHP);
 
         _playerAttacker.OnShoot += _playerAnimation.SetAttack;
+        EndLevelEvents.Instance.OnAllEnemiesKilled += SavePlayerHP;
     }
 
     private void Update()
@@ -56,5 +58,10 @@ public class PlayerComponentsManager : MonoBehaviour
     private void FixedUpdate()
     {
         _playerMovement.MovePlayer(_playerInput.GetInput(), _playerStats.GetMoveSpeed());
+    }
+
+    private void SavePlayerHP()
+    {
+        _playerHPDataContainer.PlayerHP = _playerHealth.GetCurrentHealth();
     }
 }

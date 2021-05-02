@@ -13,6 +13,8 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IPushable
     public event Action OnAttacked;
     public event Action OnDestroy;
 
+    private bool _isDead = false;
+
     public void InitHeath(float value)
     {
         _currentHealth = value;
@@ -20,18 +22,25 @@ public class EnemyHealth : MonoBehaviour, IDamagable, IPushable
         _healthBar = Instantiate(_healthBarCanvasPrefab);
         _healthBar.transform.position = _healthBarCanvasPoint.position;
 
-        _healthBar.GetComponent<HealthBarCanvas>().InitSliderValues(_currentHealth);
+        _healthBar.GetComponent<HealthBarCanvas>().InitSliderValues(_currentHealth, _currentHealth);
         _healthBar.GetComponent<HealthBarCanvas>().FollowBy(_healthBarCanvasPoint);
     }
 
     public void ApplyDamage(float damageValue)
     {
+        if (_isDead)
+        {
+            return;
+        }
+
         _currentHealth -= damageValue;
 
         _healthBar.GetComponent<HealthBarCanvas>().SetSliderValues(_currentHealth);
 
         if (_currentHealth <= 0)
         {
+            _isDead = true;
+
             Destroy(_healthBar);
 
             OnDestroy?.Invoke();

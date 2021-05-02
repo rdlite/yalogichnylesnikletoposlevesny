@@ -45,6 +45,6 @@ public class EnemyAttackerOnPlaceBehaviour : IEnemyAttack
         GameObject enemyArrow = _enemyArrowData.InstantiatePrefab();
 
         enemyArrow.transform.position = _startArrowPoint.position;
-        enemyArrow.GetComponent<Arrow>().InitArrow(_target.position, _attackDamage);
+        enemyArrow.GetComponent<Arrow>().InitArrow(_target, _attackDamage);
     }
 }

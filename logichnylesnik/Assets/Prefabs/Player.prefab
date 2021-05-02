@@ -100,6 +100,7 @@ GameObject:
   - component: {fileID: 1134021522799652762}
   - component: {fileID: 3669756064416598177}
   - component: {fileID: 1410332258736955638}
+  - component: {fileID: 701213280}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -122,6 +123,7 @@ Transform:
   - {fileID: 1134021522780533218}
   - {fileID: 3309051979188514338}
   - {fileID: 4326347417961487530}
+  - {fileID: 5418662070941445836}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -149,7 +151,7 @@ Animator:
   m_GameObject: {fileID: 1134021522799652771}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ef605f299adeb35459fae6a7aaf60d45, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -187,6 +189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerStats: {fileID: 11400000, guid: 1896905f7db7e3342981a8ba7ffde7dd, type: 2}
+  _playerHPDataContainer: {fileID: 11400000, guid: 193700b4ac06c774cb445ed7b09c1dfa, type: 2}
 --- !u!114 &1134021522799652767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,6 +245,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _arrowPrefab: {fileID: 2879246002697623427, guid: dc4dedd9c712e834bb6bc6bd591dfac8, type: 3}
   _shootPoint: {fileID: 3407373071691171047}
+  CurrentAttackType: 0
 --- !u!114 &1410332258736955638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,6 +260,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _healthBarCanvasPrefab: {fileID: 1967317818521247053, guid: b590023ab0d7f7043a824c2fe5ca392e, type: 3}
   _healthBarCanvasPoint: {fileID: 4326347417961487530}
+--- !u!114 &701213280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134021522799652771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de20ecd75a4e89a459392ebb38c73e8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _FXPrefab: {fileID: 3751123378768866803, guid: 57b30a2883817894a972d3d24ec84c02, type: 3}
+  _timeToDestroy: 1
+  _spawnPoint: {fileID: 5418662070941445836}
 --- !u!1 &1134021523024273091
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,4 +528,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1134021522799652766}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5382274450269833525
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5418662070941445836}
+  m_Layer: 8
+  m_Name: DustSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5418662070941445836
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5382274450269833525}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.349, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1134021522799652766}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

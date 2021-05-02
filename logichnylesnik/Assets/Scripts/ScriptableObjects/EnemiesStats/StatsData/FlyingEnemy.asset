@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: FlyingEnemy
   m_EditorClassIdentifier: 
   MoveSpeed: 0.3
-  Health: 80
+  Health: 160
   AttackDamage: 120
   OnDeathCoinsAmount: 8

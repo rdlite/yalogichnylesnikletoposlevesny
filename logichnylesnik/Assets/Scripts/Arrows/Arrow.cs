@@ -15,6 +15,7 @@ public abstract class Arrow : MonoBehaviour
     protected float _attackDamage;
 
     public abstract void InitArrow(Vector3 target, float damage);
- 
+    public abstract void InitArrow(Transform target, float damage);
+
     protected abstract void ArrowFlying();
 }

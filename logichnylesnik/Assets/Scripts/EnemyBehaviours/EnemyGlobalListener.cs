@@ -23,6 +23,11 @@ public class EnemyGlobalListener : MonoBehaviour
 
     private void Start()
     {
+        StartLevelEvents.Instance.OnGameStarted += StartCheckingNearestEnemy;
+    }
+
+    private void StartCheckingNearestEnemy()
+    {
         StartCoroutine(CheckNearestEnemy());
     }
 

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: OnPlaceShootingEnemy
   m_EditorClassIdentifier: 
   MoveSpeed: 0
-  Health: 200
+  Health: 270
   AttackDamage: 160
   OnDeathCoinsAmount: 15

@@ -13,7 +13,7 @@ public class FieldSpawner : MonoBehaviour
     [SerializeField] private int _fieldLengthX = 4, _fieldLengthY = 20;
 
     [SerializeField] private int _stoneObstaclesAmount = 10, _waterObstaclesAmount;
-    [SerializeField] private int EnemiesToSpawnAmount = 5;
+    [SerializeField] private EnemiesToSpawnAmount _enemiesToSpawnData;
 
     [SerializeField] private Transform _floorParentObject, _obstaclesParentObject, _doorParent;
     [SerializeField] private Transform _startFloorPoint;
@@ -26,10 +26,12 @@ public class FieldSpawner : MonoBehaviour
     [SerializeField] private GameObject Camera;
 
     [SerializeField] private Transform _enemiesParent;
-    [SerializeField] private GameObject[] EnemiesToSpawn;
+    [SerializeField] private GameObject[] _enemiesToSpawn;
 
     private List<Vector2Int> _usedCellsIDs = new List<Vector2Int>();
     private Vector2Int _playerStartPoint;
+
+    private List<Enemy> _spawnedEnemies = new List<Enemy>();
 
     private void Start()
     {
@@ -56,8 +58,11 @@ public class FieldSpawner : MonoBehaviour
 
         _fieldMeshSurface.BuildNavMesh();
 
+        StartLevelEvents.Instance.OnGameStarted += InitAllEnemies;
+
         EndLevelEvents.Instance.OnAllEnemiesKilled += SetActiveFalseDoorParent;
         EndLevelEvents.Instance.OnAllEnemiesKilled += SetActiveEndLevelTrigger;
+        EndLevelEvents.Instance.OnAllEnemiesKilled += IterateEnemiesTSpawn;
     }
 
     private void SpawnDoor()
@@ -92,7 +97,7 @@ public class FieldSpawner : MonoBehaviour
 
     private void SpawnEnemies()
     {
-        for (int i = 0; i < EnemiesToSpawnAmount; i++)
+        for (int i = 0; i < _enemiesToSpawnData.EnemiesToSpawnCount; i++)
         {
             int x = 0, y = 0;
 
@@ -101,14 +106,24 @@ public class FieldSpawner : MonoBehaviour
 
             SetCellUsed(x, y);
 
-            GameObject newEnemy = Instantiate(EnemiesToSpawn[UnityEngine.Random.Range(0, EnemiesToSpawn.Length)]);
+            GameObject newEnemy = Instantiate(_enemiesToSpawn[UnityEngine.Random.Range(0, _enemiesToSpawn.Length)]);
             SetSpawnedCubePosition(newEnemy, new Vector3(
                 _startFloorPoint.position.x + x * _cubesData.GetCubesScale(),
                 GetGroundLevelYPositionByStartPoint(1),
                 _startFloorPoint.position.z + -y * _cubesData.GetCubesScale()), Quaternion.identity, _enemiesParent);
 
-            newEnemy.GetComponent<Enemy>().InitEnemy(Player.transform);
+            _spawnedEnemies.Add(newEnemy.GetComponent<Enemy>());
         }
+    }
+
+    private void InitAllEnemies()
+    {
+        foreach (Enemy item in _spawnedEnemies)
+        {
+            item.InitEnemy(Player.transform);
+        }
+
+        _spawnedEnemies.Clear();
     }
 
     private void Update()
@@ -299,7 +314,7 @@ public class FieldSpawner : MonoBehaviour
 
     private void SetCameraStartPosition()
     {
-        Camera.transform.parent.position = new Vector3(Camera.transform.parent.position.x, Camera.transform.parent.position.y, Camera.transform.parent.position.z);
+        Camera.transform.parent.position = new Vector3(Player.transform.position.x, Camera.transform.parent.position.y, Player.transform.position.z);
     }
 
     private void SetCameraScale()
@@ -325,5 +340,10 @@ public class FieldSpawner : MonoBehaviour
     public void SetActiveEndLevelTrigger()
     {
         _endLevelTrigger.SetActive(true);
+    }
+
+    public void IterateEnemiesTSpawn()
+    {
+        _enemiesToSpawnData.EnemiesToSpawnCount++;
     }
 }

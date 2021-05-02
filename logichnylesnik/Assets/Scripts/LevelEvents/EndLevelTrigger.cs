@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EndLevelTrigger : MonoBehaviour
 {
-    [SerializeField] private InGameUIButtons _inGameUI;
+    [SerializeField] private InGameUI _inGameUI;
 
     private void OnTriggerEnter(Collider other)
     {
