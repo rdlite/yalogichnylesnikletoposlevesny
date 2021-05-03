@@ -33,6 +33,8 @@ public abstract class Enemy : MonoBehaviour
 
         GetComponent<EnemyHealth>().InitHeath(_enemyStats.GetHealth());
         GetComponent<EnemyOnCollisionAttacker>().InitEnemyAttacker(_enemyStats.GetAttackDamage());
+
+        GetComponent<NavMeshAgent>().enabled = true;
         GetComponent<NavMeshAgent>().speed = _enemyStats.GetMoveSpeed();
 
         InitBehaviours();

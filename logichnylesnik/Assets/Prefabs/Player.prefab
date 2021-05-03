@@ -230,7 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fee3a610c6e53e42aecc10109a89c93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lookAtInputRotationSpeed: 15
+  _lookAtInputRotationSpeed: 20
 --- !u!114 &3669756064416598177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,6 +245,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _arrowPrefab: {fileID: 2879246002697623427, guid: dc4dedd9c712e834bb6bc6bd591dfac8, type: 3}
   _shootPoint: {fileID: 3407373071691171047}
+  _playerWeaponBetweenSceneData: {fileID: 11400000, guid: dbcd2e74cbfc2cc4aa9d2708d71c21a0, type: 2}
   CurrentAttackType: 0
 --- !u!114 &1410332258736955638
 MonoBehaviour:

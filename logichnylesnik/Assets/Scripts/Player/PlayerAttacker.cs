@@ -12,15 +12,24 @@ public class PlayerAttacker : MonoBehaviour
 
     public event Action OnShoot;
 
+    [SerializeField] private PlayerAttackTypeBetweenScenes _playerWeaponBetweenSceneData;
+
     public AttackType CurrentAttackType = AttackType.Default;
     public void ChangePlayerAttackType(int id)
     {
         CurrentAttackType = (AttackType)id;
+        _playerWeaponBetweenSceneData.AttackType = id;
+    }
+
+    private void ChangePlayerAttackTypeOnDataBetweenScenes()
+    {
+        CurrentAttackType = (AttackType)_playerWeaponBetweenSceneData.AttackType;
     }
 
     private void Start()
     {
         OnShoot += Shoot;
+        StartLevelEvents.Instance.OnGameStarted += ChangePlayerAttackTypeOnDataBetweenScenes;
     }
 
     public void SetAttackSpeed(float value)

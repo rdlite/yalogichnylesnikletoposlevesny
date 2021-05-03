@@ -27,11 +27,14 @@ public class StartLevelEvents : MonoBehaviour
     [SerializeField] private InGameUI _inGameUI;
 
     [SerializeField] private EnemiesToSpawnAmount _enemiesCountData;
+    [SerializeField] private PlayerAttackTypeBetweenScenes _playerWeaponBetweenSceneData;
 
     private void Start()
     {
         if (_enemiesCountData.EnemiesToSpawnCount == _enemiesCountData.StartEnemiesToSpawnCountValue)
         {
+            SetPlayerWeponType(0);
+
             StartCoroutine(StartGameCounter(3));
         }
         else
@@ -56,5 +59,10 @@ public class StartLevelEvents : MonoBehaviour
     private void CallOnStartGameEvents()
     {
         OnGameStarted?.Invoke();
+    }
+
+    private void SetPlayerWeponType(int id)
+    {
+        _playerWeaponBetweenSceneData.AttackType = id;
     }
 }

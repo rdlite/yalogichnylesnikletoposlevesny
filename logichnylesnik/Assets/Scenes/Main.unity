@@ -2431,9 +2431,9 @@ MonoBehaviour:
   Camera: {fileID: 963194225}
   _enemiesParent: {fileID: 530590533}
   _enemiesToSpawn:
-  - {fileID: 1640408846328267326, guid: 6843a56ebd502a947b4981e958b35123, type: 3}
-  - {fileID: 8134886330063160433, guid: bd13fe44b2c5a5240a56834b12c45920, type: 3}
   - {fileID: 413224123378168909, guid: b07ca99ae2b95de438ff81318e995390, type: 3}
+  - {fileID: 8134886330063160433, guid: bd13fe44b2c5a5240a56834b12c45920, type: 3}
+  - {fileID: 1640408846328267326, guid: 6843a56ebd502a947b4981e958b35123, type: 3}
 --- !u!114 &1046745335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2479,6 +2479,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inGameUI: {fileID: 2092461373}
   _enemiesCountData: {fileID: 11400000, guid: 6e581f3e2f761d34c8d039b7ca1b4525, type: 2}
+  _playerWeaponBetweenSceneData: {fileID: 11400000, guid: dbcd2e74cbfc2cc4aa9d2708d71c21a0, type: 2}
 --- !u!1001 &1078833626
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3985,10 +3986,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1866991322}
     m_Modifications:
-    - target: {fileID: 1134021522799652762, guid: 0de9a859d645dc247839ac31eab92996, type: 3}
-      propertyPath: _lookAtInputRotationSpeed
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 1134021522799652766, guid: 0de9a859d645dc247839ac31eab92996, type: 3}
       propertyPath: m_RootOrder
       value: 0
